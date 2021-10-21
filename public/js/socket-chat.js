@@ -22,18 +22,24 @@ socket.on("disconnect", function () {
 });
 
 // Enviar información
-socket.emit(
-  "enviarMensaje",
-  {
-    usuario: "Fernando",
-    mensaje: "Hola Mundo",
-  },
-  function (resp) {
-    console.log("respuesta server: ", resp);
-  }
-);
+// socket.emit(
+//   "enviarMensaje",
+//   {
+//     usuario: "Fernando",
+//     mensaje: "Hola Mundo",
+//   },
+//   function (resp) {
+//     console.log("respuesta server: ", resp);
+//   }
+// );
 
 // Escuchar información
 socket.on("crearMensaje", function (mensaje) {
   console.log("Servidor:", mensaje);
+});
+
+//Escuchar cambios de usuarios
+// cuando un usuario entra o sale del chat
+socket.on("listaPersona", function (personas) {
+  console.log(personas);
 });
