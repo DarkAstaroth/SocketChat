@@ -13,4 +13,12 @@ io.on("connection", (client) => {
     let personas = usuarios.agregarPersona(client.id, data.nombre);
     return callback(personas);
   });
+
+  client.on("disconnect", () => {
+    let personaBorrada = usuarios.borrarPersona(client.id);
+    client.broadcast.emit("crearMensaje", {
+      usuario: "Administrador",
+      mensaje: `${personaBorrada} abandono el chat`,
+    });
+  });
 });
