@@ -6,14 +6,15 @@ const usuarios = new Usuarios();
 
 io.on("connection", (client) => {
   client.on("entrarChat", (data, callback) => {
-    if (!data.nombre) {
+    if (!data.nombre || !data.sala) {
       return callback({
         error: true,
-        mensaje: "El nombre es necesario",
+        mensaje: "El nombre/sala es necesario",
       });
     }
-    let personas = usuarios.agregarPersona(client.id, data.nombre);
 
+    client.join(data.sala);
+    let personas = usuarios.agregarPersona(client.id, data.nombre, data.sala);
     client.broadcast.emit("listaPersona", usuarios.getPersonas());
     return callback(personas);
   });
